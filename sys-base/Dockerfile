@@ -6,13 +6,13 @@ ENV DOCKER_IMAGE_NAME michae1t/sys
 
 ENV HOME /root
 ENV SRC_DIR $HOME/src
-ENV CONFIG_REPO $SRC_DIR/michael-system-config
+ENV CONFIG_REPO $SRC_DIR/michael-bootstrap
 ENV BOOTSTRAP_DIR $CONFIG_REPO/bootstrap
 
 RUN yum -y install git && yum clean all
 
 RUN mkdir -p $SRC_DIR && cd $SRC_DIR \
-    && git clone https://github.com/michae1T/michael-system-config.git
+    && git clone https://github.com/michae1T/michael-bootstrap.git
 
 RUN cd $BOOTSTRAP_DIR && base/yum.sh
 
