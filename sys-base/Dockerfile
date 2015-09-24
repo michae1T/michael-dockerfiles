@@ -9,12 +9,16 @@ ENV SRC_DIR $HOME/src
 ENV CONFIG_REPO $SRC_DIR/michael-bootstrap
 ENV BOOTSTRAP_DIR $CONFIG_REPO/bootstrap
 
-RUN yum -y install git && yum clean all
+RUN dnf -y install git && dnf clean all
 
 RUN mkdir -p $SRC_DIR && cd $SRC_DIR \
     && git clone https://github.com/michae1T/michael-bootstrap.git
 
+RUN cd $BOOTSTRAP_DIR && ./init-public.sh
+
 RUN cd $BOOTSTRAP_DIR && base/yum.sh
+
+RUN cd $BOOTSTRAP_DIR && base/new_console_tools.sh
 
 RUN cd $BOOTSTRAP_DIR && base/bash_defaults.sh
 
@@ -22,12 +26,12 @@ RUN cd $BOOTSTRAP_DIR && base/common_tools.sh
 
 RUN cd $BOOTSTRAP_DIR && docker/common_tools.sh
 
-RUN cd $BOOTSTRAP_DIR && base/user.sh
+RUN cd $BOOTSTRAP_DIR && base/user_base.sh
 
-RUN cd $BOOTSTRAP_DIR && base/scala_new.sh
+RUN cd $BOOTSTRAP_DIR && develop/scala_new.sh
 
-RUN cd $BOOTSTRAP_DIR && base/ruby_old.sh \
-                      && PATH=/opt/ruby-1.8.7/bin:$PATH base/ruby_current.sh \
+RUN cd $BOOTSTRAP_DIR && develop/ruby_old.sh \
+                      && PATH=/opt/ruby-1.8.7/bin:$PATH develop/ruby_current.sh \
                       && rm -rf /root/src/ruby
 
 RUN pip3 install awscli
