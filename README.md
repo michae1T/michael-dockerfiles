@@ -11,6 +11,18 @@ Basic dev env bootstrap from [michael bootstrap][1] for pretesting against new v
 
 Includes targets for incrementally updating various components.
 
+###michae1t/openvpn###
+
+Simple OpenVPN container.
+
+Note: Mount keys volume to /etc/openvpn/keys naming the keys by "server".
+
+###michae1t/pptp###
+
+Simple PPTP container based on Poptop.
+
+Note: Mount volume with chap-secrets to "/etc/creds".
+
 ##openvpn-tor-gateway##
 
 Moved to [openvpn-tor-gateway][2].

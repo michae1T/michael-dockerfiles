@@ -1,0 +1,21 @@
+#!/bin/bash
+
+syslog-ng
+
+sysctl -p
+
+iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables-save
+
+rm -rf /etc/ppp/chap-secrets
+
+SECRETS=/etc/creds/chap-secrets
+if [ -f "$SECRETS" ]; then 
+  cp $SECRETS /etc/ppp 
+else
+  echo error: credentials required at $SECRETS
+  exit 1
+fi;
+
+exec pptpd -f
+
