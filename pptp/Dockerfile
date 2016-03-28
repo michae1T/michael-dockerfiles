@@ -1,13 +1,10 @@
-FROM fedora
+FROM michae1t/fedora-base
 
 MAINTAINER michae1T@live.ca
 
 ENV DOCKER_IMAGE_NAME michae1t/pptp
 
-RUN dnf -y update \
-    && dnf -y install wget curl lynx telnet nc bind-utils \
-           iputils iproute net-tools traceroute procps-ng syslog-ng \
-    && dnf -y install pptpd \
+RUN    dnf -y install pptpd \
     && dnf clean all
 
 RUN    echo "localip 192.168.42.1" >> /etc/pptpd.conf \

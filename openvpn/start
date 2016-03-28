@@ -5,12 +5,19 @@ syslog-ng
 sysctl -p
 
 iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.255.0/24 -o eth0 -j MASQUERADE
 iptables-save
 
 if [ ! -e "/dev/net/tun" ] ; then
    mkdir /dev/net
    mknod /dev/net/tun c 10 200
 fi;
+
+status_listener() {
+  while true ; do nc -l -p 80 -c 'echo -e "HTTP/1.1 200 OK\n\n $(date)"'; done
+}
+
+status_listener &
 
 exec openvpn /etc/openvpn/server.conf
 
