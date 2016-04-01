@@ -4,7 +4,8 @@ syslog-ng
 
 sysctl -p
 
-iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.42.0/24 -j MASQUERADE
+iptables -A FORWARD -s 192.168.42.0/24 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j TCPMSS --set-mss 1356
 iptables-save
 
 rm -rf /etc/ppp/chap-secrets
