@@ -1,0 +1,8 @@
+#!/bin/bash
+
+chown -R apache:apache /mnt/data
+chown -R apache:apache /etc/owncloud
+
+/usr/sbin/php-fpm &
+
+exec /usr/sbin/nginx
