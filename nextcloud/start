@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# start s3fs
+
+mkdir -p /mnt/data
+
+/opt/s3fs -o allow_other -o use_cache=/tmp \
+          -o iam_role=$S3FS_IAM_ROLE \
+        $S3FS_S3_BUCKET /mnt/data
+
+# start nginx-nextcloud
+
+echo "daemon off;" >> /etc/nginx/nginx.conf
+
+if [ -e "/etc/nginx_overrides" ] ; then
+  cp -rf /etc/nginx_overrides/* /etc/nginx
+fi;
+
+sed -i 's/user = apache/user = root/' /etc/php-fpm.d/*.conf
+sed -i 's/group = apache/group = root/' /etc/php-fpm.d/*.conf
+
+/usr/sbin/php-fpm --allow-to-run-as-root --nodaemonize  &
+
+exec /usr/sbin/nginx

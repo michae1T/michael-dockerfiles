@@ -15,7 +15,7 @@ fi;
 if [ -f "$BUILD_FLAGS_FILE" ] ;
   then BUILD_FLAGS=`cat $BUILD_FLAGS_FILE`
 fi;
-  
+
 
 if [ -n "$2" ] ; then
   TAG=$2
@@ -28,4 +28,5 @@ fi;
 
 IMAGE_URI=$DOCKER_REGISTRY/$IMAGE_NAME:$TAG
 CONTEXT_PATH=$IMAGE_DIR
+DOCKER_BUILD_INIT_SCRIPT=$IMAGE_DIR/image-prebuild-init.sh
 
