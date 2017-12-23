@@ -4,7 +4,7 @@ MAINTAINER michae1T@live.ca
 
 ENV DOCKER_IMAGE_NAME michae1t/openvpn
 
-RUN    dnf -y install openvpn \
+RUN    dnf -y install openvpn nc iptables \
     && dnf clean all
 
 ADD server.conf /etc/openvpn/server.conf
